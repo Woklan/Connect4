@@ -43,7 +43,7 @@ namespace Connect4Console.Models
 
                 board.placePiece(1, userNum);
 
-                if (board.winCondition) break;
+                if (board.getWinCondition()) break;
 
                 do
                 {
@@ -55,10 +55,10 @@ namespace Connect4Console.Models
 
                 board.placePiece(2, userNum);
 
-                if (board.winCondition) break;
+                if (board.getWinCondition()) break;
             }
 
-            if(board.winPlayer == 1)
+            if(board.getWinPlayer() == 1)
             {
                 Console.WriteLine("Congrats Player 1, You Won!");
             }

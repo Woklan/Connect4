@@ -7,8 +7,8 @@ namespace Connect4Console.Models
     class Board
     {
         int[,] board;
-        public bool winCondition = false;
-        public int winPlayer = 0;
+        bool winCondition = false;
+        int winPlayer = 0;
 
         public Board()
         {
@@ -23,6 +23,16 @@ namespace Connect4Console.Models
                     board[x,i] = 0;
                 }
             }
+        }
+
+        public int getWinPlayer()
+        {
+            return winPlayer;
+        }
+
+        public bool getWinCondition()
+        {
+            return winCondition;
         }
 
         public void printBoard()
