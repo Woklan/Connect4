@@ -58,13 +58,17 @@ namespace Connect4Console.Models
                 if (board.getWinCondition()) break;
             }
 
-            if(board.getWinPlayer() == 1)
+            switch (board.getWinPlayer())
             {
-                Console.WriteLine("Congrats Player 1, You Won!");
-            }
-            else
-            {
-                Console.WriteLine("Congrats Player 2, You Won!");
+                case -1:
+                    Console.WriteLine("Unfortunately, it is a tie");
+                    break;
+                case 1:
+                    Console.WriteLine("Congrats Player 1, You Won!");
+                    break;
+                case 2:
+                    Console.WriteLine("Congrats Player 2, You Won!");
+                    break;
             }
         }
     }

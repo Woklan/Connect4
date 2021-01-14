@@ -79,6 +79,19 @@ namespace Connect4Console.Models
             return true;
         }
 
+        public bool checkFullBoard()
+        {
+            for(int i = 0; i < 7; i++)
+            {
+                if (board[6,i] == 0) return false;
+            }
+
+            winPlayer = -1;
+            winCondition = true;
+
+            return true;
+        }
+
         public bool checkWinDirectional(int player, int x, int y, char xDynamic, char yDynamic)
         {
             int count = 1;
