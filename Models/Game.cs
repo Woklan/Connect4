@@ -39,9 +39,7 @@ namespace Connect4Console.Models
                     userInput = Console.ReadLine();
 
                     userNum = int.Parse(userInput);
-                } while (userNum < 0 && userNum > 6);
-
-                board.placePiece(1, userNum);
+                } while (userNum < 0 && userNum > 6 && board.placePiece(1, userNum));
 
                 board.printBoard();
 
@@ -53,9 +51,7 @@ namespace Connect4Console.Models
                     userInput = Console.ReadLine();
 
                     userNum = int.Parse(userInput);
-                } while (userNum < 0 && userNum > 6);
-
-                board.placePiece(2, userNum);
+                } while (userNum < 0 && userNum > 6 && board.placePiece(2, userNum));
 
                 if (board.getWinCondition()) break;
             }
