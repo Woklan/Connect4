@@ -55,7 +55,7 @@ namespace Connect4Console.Models
 
         public void miniMaxBot()
         {
-            MiniMaxMove bot;
+            MiniMax bot;
             Board tempBoard;
 
             while (true)
@@ -70,7 +70,7 @@ namespace Connect4Console.Models
 
                 tempBoard = Board.GetInstance(board);
 
-                bot = new MiniMaxMove(tempBoard, 4);
+                bot = new MiniMax(tempBoard, 4);
 
                 board.placePiece(2, bot.getBestMove()[0]);
             }
