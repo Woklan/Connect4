@@ -9,11 +9,14 @@ namespace Connect4Console.Models
         int[,] board;
         bool winCondition = false;
         int winPlayer = 0;
+        int[] xy;
 
         public Board()
         {
             // Creates the board
             board = new int[6, 7];
+
+            xy = new int[2];
 
             // Initizalizes the Board
             for(int i = 0; i < 7; i++)
@@ -23,6 +26,11 @@ namespace Connect4Console.Models
                     board[x,i] = 0;
                 }
             }
+        }
+
+        public int[] getXY()
+        {
+            return xy;
         }
 
         public int getWinPlayer()
@@ -76,6 +84,8 @@ namespace Connect4Console.Models
 
             // updates board
             board[row, col] = player;
+            xy[0] = row;
+            xy[1] = col;
 
             winCondition = (checkWinDirectional(player, row, col, '0', '-') || checkWinDirectional(player, row, col, '-', '0') || checkWinDirectional(player, row, col, '-', '-') || checkWinDirectional(player, row, col, '+', '-'));
 
@@ -95,6 +105,61 @@ namespace Connect4Console.Models
             winCondition = true;
 
             return true;
+        }
+
+        // Change Name Later
+        public int checkNumDirectional(int player, int x, int y, char xDynamic, char yDynamic)
+        {
+            int count = 1;
+            int tempX = x;
+            int tempY = y;
+
+            if (xDynamic == '-') tempX--;
+
+            if (xDynamic == '+') tempX++;
+
+            if (yDynamic == '-') tempY--;
+
+            if (yDynamic == '+') tempY++;
+
+            while (tempY >= 0 && tempY < 6 && tempX >= 0 && tempX < 7 && board[tempX, tempY] == player)
+            {
+                if (xDynamic == '-') tempX--;
+
+                if (xDynamic == '+') tempX++;
+
+                if (yDynamic == '-') tempY--;
+
+                if (yDynamic == '+') tempY++;
+
+                count++;
+            }
+
+            tempX = x;
+            tempY = y;
+
+            if (xDynamic == '-') tempX++;
+
+            if (xDynamic == '+') tempX--;
+
+            if (yDynamic == '-') tempY++;
+
+            if (yDynamic == '+') tempY--;
+
+            while (tempY >= 0 && tempY < 6 && tempX >= 0 && tempX < 7 && board[tempX, tempY] == player)
+            {
+                if (xDynamic == '-') tempX++;
+
+                if (xDynamic == '+') tempX--;
+
+                if (yDynamic == '-') tempY++;
+
+                if (yDynamic == '+') tempY--;
+
+                count++;
+            }
+
+            return count;
         }
 
         public bool checkWinDirectional(int player, int x, int y, char xDynamic, char yDynamic)
