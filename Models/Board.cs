@@ -7,7 +7,8 @@ namespace Connect4Console.Models
     class Board
     {
         int[,] board;
-        public bool winCondition = false;
+        bool winCondition = false;
+        int winPlayer = 0;
 
         public Board()
         {
@@ -22,6 +23,16 @@ namespace Connect4Console.Models
                     board[x,i] = 0;
                 }
             }
+        }
+
+        public int getWinPlayer()
+        {
+            return winPlayer;
+        }
+
+        public bool getWinCondition()
+        {
+            return winCondition;
         }
 
         public void printBoard()
@@ -63,7 +74,20 @@ namespace Connect4Console.Models
 
             winCondition = (checkWinDirectional(player, row, col, '0', '-') || checkWinDirectional(player, row, col, '-', '0') || checkWinDirectional(player, row, col, '-', '-') || checkWinDirectional(player, row, col, '+', '-'));
 
-            //checkWin(player, row, col);
+            if (winCondition) winPlayer = player;
+
+            return true;
+        }
+
+        public bool checkFullBoard()
+        {
+            for(int i = 0; i < 7; i++)
+            {
+                if (board[6,i] == 0) return false;
+            }
+
+            winPlayer = -1;
+            winCondition = true;
 
             return true;
         }
