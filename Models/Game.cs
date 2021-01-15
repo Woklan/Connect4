@@ -22,36 +22,70 @@ namespace Connect4Console.Models
             userInput = Console.ReadLine();
 
             if (userInput == "1") pvp();
+            if (userInput == "2") randomBot();
+        }
+
+        private void __userPlace(int playerNum)
+        {
+            String userInput = "";
+            int userNum = 0;
+
+            do
+            {
+                Console.WriteLine("Player " + playerNum + ": Please choose a column starting from 0 to 6");
+                userInput = Console.ReadLine();
+
+                userNum = int.Parse(userInput);
+            } while (userNum < 0 && userNum > 6 || !board.placePiece(1, userNum));
+        }
+
+        public void randomBot()
+        {
+            Random random = new Random();
+
+            while (true)
+            {
+                board.printBoard();
+
+                __userPlace(1);
+
+                if (board.getWinCondition()) break;
+
+                board.printBoard();
+
+                while (!board.placePiece(2, random.Next(7) - 1));
+
+                if (board.getWinCondition()) break;
+            }
+
+            switch (board.getWinPlayer())
+            {
+                case -1:
+                    Console.WriteLine("Unfortunately, it is a tie");
+                    break;
+                case 1:
+                    Console.WriteLine("Congrats Player 1, You Won!");
+                    break;
+                case 2:
+                    Console.WriteLine("Congrats Player 2, You Won!");
+                    break;
+            }
         }
 
         public void pvp()
         {
-            String userInput = "";
-            int userNum = 0;
 
             while(true)
             {
                 board.printBoard();
 
-                do
-                {
-                    Console.WriteLine("Player 1: Please choose a column starting from 0 to 6");
-                    userInput = Console.ReadLine();
-
-                    userNum = int.Parse(userInput);
-                } while (userNum < 0 && userNum > 6 && board.placePiece(1, userNum));
+                __userPlace(1);
 
                 board.printBoard();
 
                 if (board.getWinCondition()) break;
 
-                do
-                {
-                    Console.WriteLine("Player 2: Please choose a column starting from 0 to 6");
-                    userInput = Console.ReadLine();
-
-                    userNum = int.Parse(userInput);
-                } while (userNum < 0 && userNum > 6 && board.placePiece(2, userNum));
+                __userPlace(2);
 
                 if (board.getWinCondition()) break;
             }
