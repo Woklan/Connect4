@@ -35,6 +35,11 @@ namespace Connect4Console.Models
             return winCondition;
         }
 
+        public int getXY(int x, int y)
+        {
+            return board[x, y];
+        }
+
         public void printBoard()
         {
             Console.WriteLine("---------");
