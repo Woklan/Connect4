@@ -18,11 +18,25 @@ namespace Connect4Console.Models
             String userInput = "";
             Console.WriteLine("Please select an option from below:");
             Console.WriteLine("(1) User vs. User");
+            Console.WriteLine("(2) Random Bot vs. User");
+            Console.WriteLine("(3) MiniMax Bot vs. User");
 
             userInput = Console.ReadLine();
 
-            if (userInput == "1") pvp();
-            if (userInput == "2") randomBot();
+            switch (userInput)
+            {
+                case "1":
+                    pvp();
+                    break;
+
+                case "2":
+                    randomBot();
+                    break;
+
+                case "3":
+                    miniMaxBot();
+                    break;
+            }
         }
 
         private void __userPlace(int playerNum)
@@ -39,6 +53,29 @@ namespace Connect4Console.Models
             } while (userNum < 0 && userNum > 6 || !board.placePiece(1, userNum));
         }
 
+        public void miniMaxBot()
+        {
+            MiniMax bot;
+            Board tempBoard;
+
+            while (true)
+            {
+                board.printBoard();
+
+                __userPlace(1);
+
+                if (board.winCondition) break;
+
+                board.printBoard();
+
+                tempBoard = Board.GetInstance(board);
+
+                bot = new MiniMax(tempBoard, 4);
+
+                board.placePiece(2, bot.getBestMove()[0]);
+            }
+        }
+
         public void randomBot()
         {
             Random random = new Random();
@@ -49,16 +86,16 @@ namespace Connect4Console.Models
 
                 __userPlace(1);
 
-                if (board.getWinCondition()) break;
+                if (board.winCondition) break;
 
                 board.printBoard();
 
                 while (!board.placePiece(2, random.Next(7) - 1));
 
-                if (board.getWinCondition()) break;
+                if (board.winCondition) break;
             }
 
-            switch (board.getWinPlayer())
+            switch (board.winPlayer)
             {
                 case -1:
                     Console.WriteLine("Unfortunately, it is a tie");
@@ -83,14 +120,14 @@ namespace Connect4Console.Models
 
                 board.printBoard();
 
-                if (board.getWinCondition()) break;
+                if (board.winCondition) break;
 
                 __userPlace(2);
 
-                if (board.getWinCondition()) break;
+                if (board.winCondition) break;
             }
 
-            switch (board.getWinPlayer())
+            switch (board.winPlayer)
             {
                 case -1:
                     Console.WriteLine("Unfortunately, it is a tie");
