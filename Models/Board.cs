@@ -7,9 +7,9 @@ namespace Connect4Console.Models
     class Board
     {
         int[,] board;
-        bool winCondition = false;
-        int winPlayer = 0;
-        int[] xy;
+        public bool winCondition { get; private set; }
+        public int winPlayer { get; private set; }
+        public int[] xy { get; private set; }
 
         public Board()
         {
@@ -26,21 +26,33 @@ namespace Connect4Console.Models
                     board[x,i] = 0;
                 }
             }
+
+            winPlayer = 0;
+            winCondition = false;
         }
 
-        public int[] getXY()
+        // Copy Constructor
+        public Board(Board board)
         {
-            return xy;
+            this.board = new int[6,7];
+            for(int i = 0; i < 6; i++)
+            {
+                for(int x = 0; x < 7; x++)
+                {
+                    this.board[i, x] = board.board[i, x];
+                }
+            }
+
+            xy = new int[2];
+
+            winPlayer = 0;
+            winCondition = false;
         }
 
-        public int getWinPlayer()
+        // Copy Factory
+        public static Board GetInstance(Board board)
         {
-            return winPlayer;
-        }
-
-        public bool getWinCondition()
-        {
-            return winCondition;
+            return new Board(board);
         }
 
         public int getXY(int x, int y)
