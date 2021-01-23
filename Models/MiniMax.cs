@@ -39,6 +39,7 @@ namespace Connect4Console.Models
 
             for(int i = 0; i < 7; i++)
             {
+                Console.WriteLine("Row: " + possibleMoves[i].currentBoard.xy[0] + "|Col: " + possibleMoves[i].currentBoard.xy[1] + "|Value: " + possibleMoves[i].getValue());
                 if(possibleMoves[i].getValue() > highestValue)
                 {
                     highestValue = possibleMoves[i].getValue();
@@ -77,32 +78,156 @@ namespace Connect4Console.Models
 
         public void updateValue()
         {
-            int tempValue = 0;
+            value = 0;
             int[] xy;
 
-            for(int i = 0; i < 7; i++)
+            if (possibleMoves[0] == null)
             {
-                if(possibleMoves[i] != null)
-                {
-                    possibleMoves[i].updateValue();
-                    tempValue += possibleMoves[i].getValue();
-                }
-                else
-                {
-                    xy = currentBoard.xy;
-                    value = currentBoard.checkNumDirectional(player == 1 ? 2 : 1, xy[0], xy[1], '0', '-');
-                    value += currentBoard.checkNumDirectional(player == 1 ? 2 : 1, xy[0], xy[1], '-', '0');
-                    value += currentBoard.checkNumDirectional(player == 1 ? 2 : 1, xy[0], xy[1], '-', '-');
-                    value += currentBoard.checkNumDirectional(player == 1 ? 2 : 1, xy[0], xy[1], '+', '-');
+                xy = currentBoard.xy;
 
-                    value += currentBoard.checkNumDirectional(player, xy[0], xy[1], '0', '-');
-                    value += currentBoard.checkNumDirectional(player, xy[0], xy[1], '-', '0');
-                    value += currentBoard.checkNumDirectional(player, xy[0], xy[1], '-', '-');
-                    value += currentBoard.checkNumDirectional(player, xy[0], xy[1], '+', '-');
+                value = upDown(player, xy[0], xy[1]);
+                value += leftRight(player, xy[0], xy[1]);
+                value += leftDiagonal(player, xy[0], xy[1]);
+                value += rightDiagonal(player, xy[0], xy[1]);
+
+                value += upDown(player == 1 ? 2 : 1, xy[0], xy[1]);
+                value += leftRight(player == 1 ? 2 : 1, xy[0], xy[1]);
+                value += leftDiagonal(player == 1 ? 2 : 1, xy[0], xy[1]);
+                value += rightDiagonal(player == 1 ? 2 : 1, xy[0], xy[1]);
+
+                value = value - 7;
+
+                if(player == 1)
+                {
+                    value = value * -1;
                 }
             }
+            else
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    if(possibleMoves[i] != null)
+                    {
+                        possibleMoves[i].updateValue();
 
-            value = tempValue;
+                        if (possibleMoves[i].getValue() > value)
+                        {
+                            value = possibleMoves[i].getValue();
+                        }
+                    }
+                }
+            }
+        }
+
+        public int upDown(int player, int row, int col)
+        {
+            int tempRow = row + 1;
+            int tempCol = col;
+            int count = 1;
+            int multiplier = 1;
+
+            while (tempRow < 6 && currentBoard.getXY(tempRow, tempCol) == player)
+            {
+                count += 1 * multiplier;
+                tempRow++;
+                multiplier++;
+            }
+
+            tempRow = row - 1;
+
+            while (tempRow > -1 && currentBoard.getXY(tempRow, tempCol) == player)
+            {
+                count += 1 * multiplier;
+                tempRow--;
+                multiplier++;
+            }
+
+
+            return count;
+        }
+
+        public int leftRight(int player, int row, int col)
+        {
+            int tempRow = row;
+            int tempCol = col + 1;
+            int count = 1;
+            int multiplier = 1;
+
+            while (tempCol < 7 && currentBoard.getXY(tempRow, tempCol) == player)
+            {
+                count += 1 * multiplier;
+                tempCol++;
+                multiplier++;
+            }
+
+            tempCol = col - 1;
+
+            while (tempCol > -1 && currentBoard.getXY(tempRow, tempCol) == player)
+            {
+                count += 1 * multiplier;
+                tempCol--;
+                multiplier++;
+            }
+
+            return count;
+        }
+
+        public int rightDiagonal(int player, int row, int col)
+        {
+            int tempRow = row + 1;
+            int tempCol = col + 1;
+            int count = 1;
+            int multiplier = 1;
+
+            while (tempCol < 7 && tempRow < 6 && currentBoard.getXY(tempRow, tempCol) == player)
+            {
+                count += 1 * multiplier;
+                tempRow++;
+                tempCol++;
+                multiplier++;
+            }
+
+            tempRow = row - 1;
+            tempCol = col - 1;
+
+            while (tempCol > -1 && tempRow > -1 && currentBoard.getXY(tempRow, tempCol) == player)
+            {
+                count += 1 * multiplier;
+                tempRow--;
+                tempCol--;
+                multiplier++;
+            }
+
+            return count;
+        }
+
+        public int leftDiagonal(int player, int row, int col)
+        {
+            int tempRow = row - 1;
+            int tempCol = col + 1;
+            int count = 1;
+            int multiplier = 1;
+
+            while (tempCol < 7 && tempRow > -1 && currentBoard.getXY(tempRow, tempCol) == player)
+            {
+                count += 1 * multiplier;
+                tempRow--;
+                tempCol++;
+                multiplier++;
+            }
+
+            tempRow = row + 1;
+            tempCol = col - 1;
+
+            while (tempCol > -1 && tempRow < 6 && currentBoard.getXY(tempRow, tempCol) == player)
+            {
+                count += 1 * multiplier;
+                tempRow++;
+                tempCol--;
+                multiplier++;
+            }
+
+            return count;
         }
     }
 }
