@@ -125,6 +125,7 @@ namespace Connect4Console.Models
             int count = 1;
             int tempX = x;
             int tempY = y;
+            int multiplier = 1;
 
             if (xDynamic == '-') tempX--;
 
@@ -134,7 +135,7 @@ namespace Connect4Console.Models
 
             if (yDynamic == '+') tempY++;
 
-            while (tempY >= 0 && tempY < 6 && tempX >= 0 && tempX < 7 && board[tempX, tempY] == player)
+            while (tempX >= 0 && tempX < 6 && tempY >= 0 && tempY < 7 && board[tempX, tempY] == player)
             {
                 if (xDynamic == '-') tempX--;
 
@@ -144,11 +145,13 @@ namespace Connect4Console.Models
 
                 if (yDynamic == '+') tempY++;
 
-                count++;
+                count += multiplier * 1;
+                multiplier += 5;
             }
 
             tempX = x;
             tempY = y;
+         
 
             if (xDynamic == '-') tempX++;
 
@@ -158,7 +161,7 @@ namespace Connect4Console.Models
 
             if (yDynamic == '+') tempY--;
 
-            while (tempY >= 0 && tempY < 6 && tempX >= 0 && tempX < 7 && board[tempX, tempY] == player)
+            while (tempX >= 0 && tempX < 6 && tempY >= 0 && tempY < 7 && board[tempX, tempY] == player)
             {
                 if (xDynamic == '-') tempX++;
 
@@ -168,10 +171,12 @@ namespace Connect4Console.Models
 
                 if (yDynamic == '+') tempY--;
 
-                count++;
+                count += multiplier * 1;
+                multiplier += 5;
             }
 
-            return count;
+            return player == 1 ? count * -1 : count;
+            
         }
 
         public bool checkWinDirectional(int player, int x, int y, char xDynamic, char yDynamic)
@@ -188,7 +193,7 @@ namespace Connect4Console.Models
     
             if(yDynamic == '+') tempY++;
 
-            while(tempY >= 0 && tempY < 6 && tempX >= 0 && tempX < 7 && board[tempX, tempY] == player)
+            while(tempX >= 0 && tempX < 6 && tempY >= 0 && tempY < 7 && board[tempX, tempY] == player)
             {
                 if (xDynamic == '-') tempX--;
 
@@ -212,7 +217,7 @@ namespace Connect4Console.Models
 
             if (yDynamic == '+') tempY--;
 
-            while (tempY >= 0 && tempY < 6 && tempX >= 0 && tempX < 7 && board[tempX, tempY] == player)
+            while (tempX >= 0 && tempX < 6 && tempY >= 0 && tempY < 7 && board[tempX, tempY] == player)
             {
                 if (xDynamic == '-') tempX++;
 

@@ -70,9 +70,11 @@ namespace Connect4Console.Models
 
                 tempBoard = Board.GetInstance(board);
 
-                bot = new MiniMax(tempBoard, 4);
+                bot = new MiniMax(tempBoard, 1);
 
-                board.placePiece(2, bot.getBestMove()[0]);
+                board.placePiece(2, bot.getBestMove()[1]);
+
+                if (board.winCondition) break;
             }
         }
 
