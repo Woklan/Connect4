@@ -36,6 +36,10 @@ namespace Connect4Console.Models
                 case "3":
                     miniMaxBot();
                     break;
+
+                default:
+                    gameSetup();
+                    break;
             }
         }
 
