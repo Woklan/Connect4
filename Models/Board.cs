@@ -83,7 +83,7 @@ namespace Connect4Console.Models
             int row = 5;
 
             // Checks if move is valid
-            if(board[5, col] != 0)
+            if(col < 0 || col > 6 || board[5, col] != 0)
             {
                 return false;
             }

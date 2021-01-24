@@ -50,7 +50,7 @@ namespace Connect4Console.Models
                 userInput = Console.ReadLine();
 
                 userNum = int.Parse(userInput);
-            } while (userNum < 0 && userNum > 6 || !board.placePiece(1, userNum));
+            } while (!board.placePiece(1, userNum));
         }
 
         public void miniMaxBot()
