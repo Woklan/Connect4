@@ -10,7 +10,7 @@ namespace Connect4Console.Models
 
         public Game()
         {
-            board = new Board();
+            board = new Board(false);
         }
 
         public void gameSetup()

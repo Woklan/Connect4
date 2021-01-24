@@ -10,8 +10,9 @@ namespace Connect4Console.Models
         public bool winCondition { get; private set; }
         public int winPlayer { get; private set; }
         public int[] xy { get; private set; }
+        public bool virtualBoard { get; set; }
 
-        public Board()
+        public Board(bool virtualFlag = true)
         {
             // Creates the board
             board = new int[6, 7];
@@ -29,6 +30,8 @@ namespace Connect4Console.Models
 
             winPlayer = 0;
             winCondition = false;
+
+            virtualBoard = virtualFlag;
         }
 
         // Copy Constructor
@@ -47,6 +50,7 @@ namespace Connect4Console.Models
 
             winPlayer = 0;
             winCondition = false;
+            virtualBoard = true;
         }
 
         // Copy Factory
@@ -99,6 +103,12 @@ namespace Connect4Console.Models
             xy[0] = row;
             xy[1] = col;
 
+            // Handles if bot is making virtual moves
+            if (!virtualBoard)
+            {
+                Console.WriteLine("Player " + player + " played Row: " + row + " | Col: " + col);
+            }
+            
             winCondition = (checkWinDirectional(player, row, col, '0', '-') || checkWinDirectional(player, row, col, '-', '0') || checkWinDirectional(player, row, col, '-', '-') || checkWinDirectional(player, row, col, '+', '-'));
 
             if (winCondition) winPlayer = player;
