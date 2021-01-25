@@ -129,66 +129,6 @@ namespace Connect4Console.Models
             return true;
         }
 
-        // Change Name Later
-        public int checkNumDirectional(int player, int x, int y, char xDynamic, char yDynamic)
-        {
-            int count = 1;
-            int tempX = x;
-            int tempY = y;
-            int multiplier = 1;
-
-            if (xDynamic == '-') tempX--;
-
-            if (xDynamic == '+') tempX++;
-
-            if (yDynamic == '-') tempY--;
-
-            if (yDynamic == '+') tempY++;
-
-            while (tempX >= 0 && tempX < 6 && tempY >= 0 && tempY < 7 && board[tempX, tempY] == player)
-            {
-                if (xDynamic == '-') tempX--;
-
-                if (xDynamic == '+') tempX++;
-
-                if (yDynamic == '-') tempY--;
-
-                if (yDynamic == '+') tempY++;
-
-                count += multiplier * 1;
-                multiplier += 5;
-            }
-
-            tempX = x;
-            tempY = y;
-         
-
-            if (xDynamic == '-') tempX++;
-
-            if (xDynamic == '+') tempX--;
-
-            if (yDynamic == '-') tempY++;
-
-            if (yDynamic == '+') tempY--;
-
-            while (tempX >= 0 && tempX < 6 && tempY >= 0 && tempY < 7 && board[tempX, tempY] == player)
-            {
-                if (xDynamic == '-') tempX++;
-
-                if (xDynamic == '+') tempX--;
-
-                if (yDynamic == '-') tempY++;
-
-                if (yDynamic == '+') tempY--;
-
-                count += multiplier * 1;
-                multiplier += 5;
-            }
-
-            return player == 1 ? count * -1 : count;
-            
-        }
-
         public bool checkWinDirectional(int player, int x, int y, char xDynamic, char yDynamic)
         {
             int count = 1;
