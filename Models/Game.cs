@@ -57,6 +57,22 @@ namespace Connect4Console.Models
             } while (!board.placePiece(1, userNum));
         }
 
+        private void __winner(int player)
+        {
+            switch (board.winPlayer)
+            {
+                case -1:
+                    Console.WriteLine("Unfortunately, it is a tie");
+                    break;
+                case 1:
+                    Console.WriteLine("Congrats Player 1, You Won!");
+                    break;
+                case 2:
+                    Console.WriteLine("Congrats Player 2, You Won!");
+                    break;
+            }
+        }
+
         public void miniMaxBot()
         {
             MiniMax bot;
@@ -80,6 +96,8 @@ namespace Connect4Console.Models
 
                 if (board.winCondition) break;
             }
+
+            __winner(board.winPlayer);
         }
 
         public void randomBot()
@@ -101,18 +119,7 @@ namespace Connect4Console.Models
                 if (board.winCondition) break;
             }
 
-            switch (board.winPlayer)
-            {
-                case -1:
-                    Console.WriteLine("Unfortunately, it is a tie");
-                    break;
-                case 1:
-                    Console.WriteLine("Congrats Player 1, You Won!");
-                    break;
-                case 2:
-                    Console.WriteLine("Congrats Player 2, You Won!");
-                    break;
-            }
+            __winner(board.winPlayer);
         }
 
         public void pvp()
@@ -133,18 +140,7 @@ namespace Connect4Console.Models
                 if (board.winCondition) break;
             }
 
-            switch (board.winPlayer)
-            {
-                case -1:
-                    Console.WriteLine("Unfortunately, it is a tie");
-                    break;
-                case 1:
-                    Console.WriteLine("Congrats Player 1, You Won!");
-                    break;
-                case 2:
-                    Console.WriteLine("Congrats Player 2, You Won!");
-                    break;
-            }
+            __winner(board.winPlayer);
         }
     }
 }
